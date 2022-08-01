@@ -1,0 +1,9 @@
+{
+  "workbench.colorCustomizations": {
+    "titleBar.activeForeground": "#fff",
+    "titleBar.activeBackground": "#3F758D"
+  },
+  "editor.fontSize": 15,
+  "window.zoomLevel": 1,
+  "workbench.iconTheme": "material-icon-theme"
+}
