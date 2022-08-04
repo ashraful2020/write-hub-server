@@ -3,16 +3,16 @@ const app = express();
 const port = process.env.PORT || 5000;
 const cors = require("cors");
 const { MongoClient, ServerApiVersion } = require("mongodb");
-require('dotenv').config();
-const fileUpload = require('express-fileupload');
+require("dotenv").config();
+const fileUpload = require("express-fileupload");
 
-// Require  Route 
-const user =require('./routes/user')
+// Require  Route
+const user = require("./routes/user");
 const post = require("./routes/post");
-const quote=require("./routes/quote")
+const quote = require("./routes/quote");
 // Apps middleware
 app.use(cors());
-app.use(express.json()); 
+app.use(express.json());
 app.use(fileUpload());
 // app.use(urlencoded:true)
 app.use(user);
@@ -30,9 +30,8 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    client.connect();
+    client.connect(() => console.log("Database connected"));
     app.get("/", async (req, res) => {
-       
       res.send(
         `<h1 style='color:#99bbf2;font-size:70px; margin-top:20%; text-align:center'> Write-hub server side</h1>`
       );
@@ -50,5 +49,5 @@ module.exports.client = {
   // client: client,
   //database: client.db('database_name'),;
   userCollection: client.db("write-hub").collection("user"),
-  postCollection: client.db("write-hub").collection("post"), 
+  postCollection: client.db("write-hub").collection("post"),
 };

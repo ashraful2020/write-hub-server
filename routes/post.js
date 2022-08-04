@@ -1,10 +1,28 @@
 const route = require("express").Router();
 const root_route = require("../index");
-
+const { ObjectId } = require("mongodb");
 route.get("/posts", async (req, res) => {
-  const cursor = root_route.client.postCollection.find({});
+  const cursor = root_route.client.postCollection.find({}).skip(0).limit(11);
   const result = await cursor.toArray();
   return res.send(result);
+});
+route.get("/posts/:id", async (req, res) => {
+  const id = req.params.id;
+  const query = { _id: ObjectId(id) };
+  const cursor = await root_route.client.postCollection.findOne(query);
+  return res.send(cursor);
+});
+
+route.get("/category-post", async (req, res) => {
+  const query = req?.query?.category;
+  console.log(req.query, "a");
+  const cursor = root_route.client.postCollection
+    .find({ category: query })
+    .skip(0)
+    .limit(11);
+  const result = await cursor.toArray();
+  // console.log(result);
+  res.send({ success: true, result });
 });
 route.post("/posts", async (req, res) => {
   const {
